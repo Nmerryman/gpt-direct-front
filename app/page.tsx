@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import Popup from "reactjs-popup";
+import { PingMessage } from "./api/ping";
+
 
 function LoginBtn() {
   const [open, setOpen] = useState(false);
@@ -35,11 +37,26 @@ function Header() {
   )
 }
 
+
+async function ping() {
+    return fetch("http://localhost:8080/ping", 
+        {
+        method: "POST", 
+        headers: 
+            {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            }, 
+        body: JSON.stringify(new PingMessage("pinged!"))
+        }
+    )
+}
+
 export default function Home() {
 
   const [systemText, setSystemText] = useState("");
   const [userText, setUserText] = useState("");
-  const [resultText, setResurtText] = useState("");
+  const [resultText, setResultText] = useState("");
 
   return (
     <div>
@@ -54,11 +71,12 @@ export default function Home() {
       <textarea className="text-black" value={userText} onChange={(e) => {setUserText(e.target.value)}}></textarea>
       <br/>
 
-      <button className="outline outline-1" onClick={() => console.log(userText)}>Request</button>
+      <button className="outline outline-1" onClick={() => {fetch("http://localhost:8080/greeting").then(resp => {console.log(resp.text())})}}>Request</button>
+      <button className="outline outline-1" onClick={ping}>Ping</button>
       <br/>
       Result
       <br/>
-      <textarea className="text-black" value={resultText}></textarea>
+      <textarea className="text-black" value={resultText} readOnly></textarea>
     </div>
   );
 }
