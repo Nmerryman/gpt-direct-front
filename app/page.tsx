@@ -1,6 +1,5 @@
 'use client'
 
-import Image from "next/image";
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import { PingMessage } from "./api/ping";
@@ -56,8 +55,8 @@ export default function Home() {
 
   const [systemText, setSystemText] = useState("");
   const [userText, setUserText] = useState("");
-  const [resultText, setResultText] = useState("");
-
+  const [resultText] = useState("");
+  
   return (
     <div>
       <Header></Header>
