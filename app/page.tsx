@@ -5,6 +5,8 @@ import Popup from "reactjs-popup";
 import { PingMessage } from "./api/ping";
 
 
+const API_URL = process.env.API_URL
+
 function LoginBtn() {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState("");
@@ -38,7 +40,7 @@ function Header() {
 
 
 async function ping() {
-    return fetch("http://localhost:8080/ping", 
+    return fetch(API_URL + "/ping", 
         {
         method: "POST", 
         headers: 
@@ -70,7 +72,7 @@ export default function Home() {
       <textarea className="text-black" value={userText} onChange={(e) => {setUserText(e.target.value)}}></textarea>
       <br/>
 
-      <button className="outline outline-1" onClick={() => {fetch("http://localhost:8080/greeting").then(resp => {console.log(resp.text())})}}>Request</button>
+      <button className="outline outline-1" onClick={() => {fetch(API_URL + "/greeting").then(resp => {console.log(resp.text())})}}>Request</button>
       <button className="outline outline-1" onClick={ping}>Ping</button>
       <br/>
       Result
