@@ -10,13 +10,6 @@ COPY . .
 
 RUN npm run build
 
+EXPOSE 3000
 
-FROM nginx:1.25.1
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-COPY --from=build /app/build /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD npm run start
