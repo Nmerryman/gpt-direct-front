@@ -5,7 +5,7 @@ import Popup from "reactjs-popup";
 import { PingMessage } from "./api/ping";
 
 
-const API_URL = "https://testspring.hydris.dev/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function LoginBtn() {
   const [open, setOpen] = useState(false);
