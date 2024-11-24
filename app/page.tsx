@@ -115,6 +115,7 @@ export default function Home() {
 
       <button className="outline outline-1" onClick={() => {fetch(API_URL + "/greeting").then(resp => {console.log(resp.text())})}}>Request</button>
       <button className="outline outline-1" onClick={ping}>Ping</button>
+      <button className="outline outline-1" onClick={() => {fetch(API_URL + "/authtest", {method: "POST"}).then(resp => {console.log(resp.text())})}}>AuthTest</button>
       <br/>
       Result
       <br/>
