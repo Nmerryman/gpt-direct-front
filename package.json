@@ -12,7 +12,8 @@
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "universal-cookie": "^7.2.2"
   },
   "devDependencies": {
     "@types/node": "^20",
