@@ -132,11 +132,11 @@ export default function Home() {
       <br/>
       System prompt!!!!
       <br/>
-      <textarea className="text-black" value={systemText} onChange={(e) => {setSystemText(e.target.value)}}></textarea>
+      <textarea className="text-black w-4/5" value={systemText} onChange={(e) => {setSystemText(e.target.value)}}></textarea>
       <br/>
       User Prompt
       <br/>
-      <textarea className="text-black" value={userText} onChange={(e) => {setUserText(e.target.value)}}></textarea>
+      <textarea className="text-black w-4/5" value={userText} onChange={(e) => {setUserText(e.target.value)}}></textarea>
       <br/>
 
       <button className="outline outline-1" onClick={() => {request(systemText, userText, setResultText)}}>Request</button>
@@ -146,7 +146,7 @@ export default function Home() {
       <br/>
       Result
       <br/>
-      <textarea className="text-black" value={resultText} readOnly></textarea>
+      <textarea className="text-black w-4/5" value={resultText} readOnly></textarea>
     </div>
   );
 }
