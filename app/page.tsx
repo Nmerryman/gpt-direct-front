@@ -100,7 +100,12 @@ async function request(systemText: string, userText: string, setResultText: Disp
   console.log(1);
   const res = await fetch(API_URL + "/request",
   {
-    method: "POST",
+    method: "POST", 
+    headers:
+      {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
     body: JSON.stringify(new GptRequest(systemText, userText))
   })
   console.log(2)
