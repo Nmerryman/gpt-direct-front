@@ -1,17 +1,19 @@
 'use client'
 
-import { useState, Dispatch, ChangeEvent } from "react";
+import { useState, Dispatch, SetStateAction, ChangeEvent } from "react";
 import Popup from "reactjs-popup";
 import { PingMessage } from "./api/ping";
 import { AuthRequest } from "./api/authReq";
 import { AuthResponse } from "./api/authResp";
 import Cookies from "universal-cookie";
+import { GptRequest } from "./api/gptRequest";
+import { GptResponse } from "./api/gptResponse";
 
 
 const API_URL = "api";
 
 
-async function attemptLogin(setStatus: Dispatch<string>, textValue: string) {
+async function attemptLogin(setStatus: Dispatch<SetStateAction<string>>, textValue: string) {
   setStatus("Attempting login");
 
   const res = await fetch(API_URL + "/auth",
@@ -94,11 +96,30 @@ async function ping() {
     )
 }
 
+async function request(systemText: string, userText: string, setResultText: Dispatch<SetStateAction<string>>) {
+  console.log(1);
+  const res = await fetch(API_URL + "/request",
+  {
+    method: "POST",
+    body: JSON.stringify(new GptRequest(systemText, userText))
+  })
+  console.log(2)
+
+  if (!res.ok) {
+    throw new Error("Request errored for some reason");
+  }
+  console.log(3)
+  const content: GptResponse = await res.json();
+
+  setResultText(content.text);
+
+}
+
 export default function Home() {
 
   const [systemText, setSystemText] = useState("");
   const [userText, setUserText] = useState("");
-  const [resultText] = useState("");
+  const [resultText, setResultText] = useState("");
   
   return (
     <div>
@@ -113,9 +134,10 @@ export default function Home() {
       <textarea className="text-black" value={userText} onChange={(e) => {setUserText(e.target.value)}}></textarea>
       <br/>
 
-      <button className="outline outline-1" onClick={() => {fetch(API_URL + "/greeting").then(resp => {console.log(resp.text())})}}>Request</button>
+      <button className="outline outline-1" onClick={() => {request(systemText, userText, setResultText)}}>Request</button>
+      <button className="outline outline-1" onClick={() => {fetch(API_URL + "/greeting").then(resp => {console.log(resp.text())})}}>Greeting</button>
       <button className="outline outline-1" onClick={ping}>Ping</button>
-      <button className="outline outline-1" onClick={() => {fetch(API_URL + "/authtest", {method: "POST"}).then(resp => {console.log(resp.text())})}}>AuthTest</button>
+      <button className="outline outline-1" onClick={() => {fetch(API_URL + "/authtest", {method: "POST"})}}>AuthTest</button>
       <br/>
       Result
       <br/>
