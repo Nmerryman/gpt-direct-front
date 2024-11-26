@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Dispatch, SetStateAction, ChangeEvent } from "react";
+import { useState, Dispatch, SetStateAction, ChangeEvent, KeyboardEvent } from "react";
 import Popup from "reactjs-popup";
 import { PingMessage } from "./api/ping";
 import { AuthRequest } from "./api/authReq";
@@ -53,14 +53,20 @@ function LoginBtn() {
   const [status, setStatus] = useState("");
   const [passField, setPassField] = useState("");
 
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key == "Enter") {
+      attemptLogin(setStatus, passField);
+    }
+  }
+
   return (
     <div>
       <button className="outline outline-1 grow" onClick={() => setOpen(true)}>Log in</button>
       <Popup open={open} onClose={() => setOpen(false)}>
-        <div className="modal outline outline-1 outline-white" >
+        <div className="modal outline outline-1 outline-white bg-black" >
           <span>Enter the password</span>
           <div>
-            <input type="text" placeholder="password" className="text-black" onChange={(e: ChangeEvent<HTMLInputElement>) => {setPassField(e.target.value)}} value={passField}></input>
+            <input type="text" placeholder="password" className="text-black" onChange={(e: ChangeEvent<HTMLInputElement>) => {setPassField(e.target.value)}} value={passField} onKeyDown={handleKeyDown}></input>
             <button onClick={() => {attemptLogin(setStatus, passField)}}>Send</button>
           </div>
           <span>{status}</span>
