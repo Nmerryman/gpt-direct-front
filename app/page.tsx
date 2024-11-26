@@ -38,7 +38,7 @@ async function attemptLogin(setStatus: Dispatch<SetStateAction<string>>, textVal
   if (authResponse.token.length > 0) {
     // const [cookies, setCookie, remove_cookie] = useCookies(['auth'])
     const cookies = new Cookies(null, {path: "/"});
-    cookies.set("auth", authResponse.token, {sameSite: "none", secure: true});
+    cookies.set("auth", authResponse.token);
     console.log(cookies.get("auth"));
     setStatus("Login Sucessful.");
     // console.log(1)
@@ -120,6 +120,11 @@ async function request(systemText: string, userText: string, setResultText: Disp
 
 }
 
+function deauth() {
+  const cookies = new Cookies(null, {path: "/"});
+  cookies.set("auth", "");
+}
+
 export default function Home() {
 
   const [systemText, setSystemText] = useState("");
@@ -143,6 +148,7 @@ export default function Home() {
       <button className="outline outline-1" onClick={() => {fetch(API_URL + "/greeting").then(resp => {console.log(resp.text())})}}>Greeting</button>
       <button className="outline outline-1" onClick={ping}>Ping</button>
       <button className="outline outline-1" onClick={() => {fetch(API_URL + "/authtest", {method: "POST"})}}>AuthTest</button>
+      <button className="outline outline-1" onClick={deauth}>deauth</button>
       <br/>
       Result
       <br/>
